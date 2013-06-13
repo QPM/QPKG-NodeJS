@@ -7,7 +7,7 @@ QPKG
 ===========
 QPKG files/applications makes it easy for [QNAP](http://www.qnap.com/) Turbo NAS to install and remove packages.
 
-Download: http://bit.ly/qpkg_nodejs
+Download: http://bit.ly/qpkg_nodejs_0_8_22
 
 ===========
 ![image](https://github.com/yutin1987/QPKG-NodeJS/raw/master/icon/nodejs_640x400.png)
