@@ -137,7 +137,7 @@ pkg_post_install(){
   CONF=/etc/config/qpkg.conf
   QPKG_DIR=$(/sbin/getcfg $QPKG_NAME Install_Path -d "" -f $CONF)
   rm -rf $QPKG_DIR/node
-  if [ $(/usr/bin/expr match $(arch) "arm") -ne 0 ]; then
+  if [ $(expr match "$(cat /proc/cpuinfo)" '.*ARM') -ne 0 ]; then
     echo "CPU is ARM use nodejs_arm"
     mv -f $QPKG_DIR/node_arm $QPKG_DIR/node
   else

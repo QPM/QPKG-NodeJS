@@ -2,6 +2,7 @@
 CONF=/etc/config/qpkg.conf
 QPKG_NAME="nodejs"
 QPKG_DIR=$(/sbin/getcfg $QPKG_NAME Install_Path -d "" -f $CONF)
+BIN_PATH=/bin
 
 case "$1" in
   start)
@@ -10,16 +11,17 @@ case "$1" in
         echo "$QPKG_NAME is disabled."
         exit 1
     fi
-    ln -sf $QPKG_DIR/node /opt/node
-    ln -sf $QPKG_DIR/node/bin/node /opt/bin/node
-    ln -sf $QPKG_DIR/node/bin/npm /opt/bin/npm
+    chmod 755 $QPKG_DIR/node/bin/*
+    ln -nfs $QPKG_DIR/node /opt/node
+    ln -nfs $QPKG_DIR/node/bin/node $BIN_PATH/node
+    ln -nfs $QPKG_DIR/node/bin/npm $BIN_PATH/npm
     : ADD START ACTIONS HERE
     ;;
 
   stop)
     rm /opt/node
-    rm /opt/bin/node
-    rm /opt/bin/npm
+    rm $BIN_PATH/node
+    rm $BIN_PATH/npm
     : ADD STOP ACTIONS HERE
     ;;
 
