@@ -107,6 +107,7 @@ SYS_QPKG_SERVICE_ENABLED="TRUE"
 #}"
 #
 #PKG_POST_REMOVE="{
+#  rm -rf $OPT_PATH
 #}"
 #
 ######################################################################
@@ -134,8 +135,10 @@ SYS_QPKG_SERVICE_ENABLED="TRUE"
 #}
 #
 pkg_post_install(){
+  OPT_PATH=/mnt/ext/opt/node
   CONF=/etc/config/qpkg.conf
   QPKG_DIR=$(/sbin/getcfg $QPKG_NAME Install_Path -d "" -f $CONF)
+  
   rm -rf $QPKG_DIR/node
   if [ $(expr match "$(cat /proc/cpuinfo)" '.*ARM') -ne 0 ]; then
     echo "CPU is ARM use nodejs_arm"
@@ -144,4 +147,9 @@ pkg_post_install(){
     echo "CPU is x86 use nodejs_x86"
     mv -f $QPKG_DIR/node_x86 $QPKG_DIR/node
   fi;
+
+  cp -rf $QPKG_DIR/node $OPT_PATH
+
+  rm -f $OPT_PATH/bin/npm
+  ln -sf $OPT_PATH/lib/node_modules/npm/bin/npm-cli.js $OPT_PATH/bin/npm
 }
