@@ -9,7 +9,7 @@ case "$1" in
     ln -nfs "${SYS_QPKG_DIR}/node" "$BIN_PATH/node"
     ln -nfs "${SYS_QPKG_DIR}/npm" "$BIN_PATH/npm"
 
-    $CMD_ECHO "export PATH=$PATH:${OPT_PATH}/bin #NODEJS PATH" >> /etc/profile
+    $CMD_ECHO "export PATH=$PATH:${OPT_PATH}/bin" >> /etc/profile
     source /etc/profile
 
     npm config set prefix ${OPT_PATH} -g
@@ -22,7 +22,7 @@ case "$1" in
     $CMD_RM -f "${BIN_PATH}/node"
     $CMD_RM -f "${BIN_PATH}/npm"
 
-    $CMD_SED -i '/#NODEJS PATH/d' /etc/profile
+    $CMD_SED -i '/${OPT_PATH}\/bin/d' /etc/profile
     source /etc/profile
 
     : ADD STOP ACTIONS HERE
